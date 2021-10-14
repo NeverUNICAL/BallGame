@@ -13,7 +13,7 @@ public class CameraMover : MonoBehaviour
 		_velocity = Vector3.zero;
 	}
 
-	void FixedUpdate ()
+	private void FixedUpdate ()
 	{
 		Vector3 desiredPosition = new Vector3(_target.position.x, _target.position.z) + _offset;
 		Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition,ref _velocity, _smoothSpeed);

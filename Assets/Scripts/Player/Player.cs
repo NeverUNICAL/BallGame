@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     
     public void Die()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
     public void AddCoin(int coin)
