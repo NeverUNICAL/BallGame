@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerMover))]
 
 public class PlayerInput : MonoBehaviour
 {
+    public event UnityAction ClosedGame;
+    public event UnityAction ChangedGravity;
+
     private PlayerMover _mover;
 
     private void Start()
@@ -16,19 +17,14 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
         {
-            _mover.ChangeGravity();
+            ChangedGravity?.Invoke();
         }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            _mover.ChangeGravity();
-        }
-
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(0);
+            ClosedGame?.Invoke();
         }
     }
 }

@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _coinsAmount;
     
     public event UnityAction<int> CoinsAmountChanged;
-    
+
     public void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

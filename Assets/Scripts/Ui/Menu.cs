@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using IJunior.TypedScenes;
 using UnityEngine.UIElements;
+
 
 public class Menu : MonoBehaviour
 {
@@ -12,7 +11,7 @@ public class Menu : MonoBehaviour
     
     public void Play()
     {
-        SceneManager.LoadScene(1);
+        Level1.Load();
     }
 
     public void SelectLevel()

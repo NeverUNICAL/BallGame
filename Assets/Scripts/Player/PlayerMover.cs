@@ -1,24 +1,43 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using IJunior.TypedScenes;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(PlayerInput))]
 
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private WinningPanel _panel;
     
     private Player _player;
+    private PlayerInput _input;
     private Rigidbody _rigidbody;
     private bool _isGrounded;
     private Vector3 _defaultGravity;
     
+    private void Awake()
+    {
+        _input = GetComponent<PlayerInput>();
+    }
+
     private void Start()
     {
+        _defaultGravity = new Vector3(0, -9.8f, 0);
         _rigidbody = GetComponent<Rigidbody>();
         _player = GetComponent<Player>();
-        _defaultGravity = new Vector3(0, -9.8f, 0);
+        Physics.gravity = _defaultGravity;
+    }
+
+    private void OnEnable()
+    {
+        _input.ChangedGravity += OnGravityChanged;
+        _input.ClosedGame += OnGameClosed;
+    }
+
+    private void OnDisable()
+    {
+        _input.ChangedGravity -= OnGravityChanged;
+        _input.ClosedGame -= OnGameClosed;
     }
 
     private void Update()
@@ -59,7 +78,12 @@ public class PlayerMover : MonoBehaviour
         _isGrounded = false;
     }
 
-    public void ChangeGravity()
+    private void OnGameClosed()
+    {
+        MainMenu.Load();
+    }
+    
+    private void OnGravityChanged()
     {
         if (_isGrounded)
             Physics.gravity = new Vector3(0,Physics.gravity.y * -1,0);
